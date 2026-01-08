@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+dfe_nfse.egg-info/PKG-INFO
+dfe_nfse.egg-info/SOURCES.txt
+dfe_nfse.egg-info/dependency_links.txt
+dfe_nfse.egg-info/requires.txt
+dfe_nfse.egg-info/top_level.txt
+nfse/__init__.py

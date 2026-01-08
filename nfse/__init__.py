@@ -7,7 +7,7 @@ import gzip
 import base64
 from datetime import datetime
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 def extract_pem_and_key_from_pfx(pfx_path, password):
     """
