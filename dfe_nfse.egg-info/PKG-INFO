@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: dfe-nfse
-Version: 0.1.1
+Version: 0.1.2
 Summary: Biblioteca para baixar NFSe do Ambiente Nacional (ADN)
 Home-page: https://github.com/DaavidSiilva/dfe-nfse
 Author: David Silva
@@ -23,6 +23,10 @@ Dynamic: license-file
 Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/DaavidSiilva/dfe-nfse/main/assets/logo.png" alt="Logo DFE-NFSe" width="200"/>
+</div>
 
 # NFSe Nacional
 
