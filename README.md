@@ -2,6 +2,12 @@
   <img src="https://raw.githubusercontent.com/DaavidSiilva/dfe-nfse/main/assets/logo.png" alt="Logo DFE-NFSe" width="200"/>
 </div>
 
+<p align="center">
+  <img src="https://static.pepy.tech/badge/dfe-nfse" />
+  <img src="https://img.shields.io/pypi/v/dfe-nfse" />
+  <img src="https://img.shields.io/github/stars/DaavidSiilva/dfe-nfse" />
+</p>
+
 # NFSe Nacional
 
 Biblioteca Python desenvolvida para facilitar o download e automação de Notas Fiscais de Serviço Eletrônicas (NFSe) diretamente do Ambiente de Dados Nacional (ADN).
