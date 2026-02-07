@@ -7,7 +7,7 @@ import gzip
 import base64
 from datetime import datetime
 
-__version__ = "0.1.2"
+__version__ = "0.2.1"
 
 def extract_pem_and_key_from_pfx(pfx_path, password):
     """
@@ -32,12 +32,63 @@ def extract_pem_and_key_from_pfx(pfx_path, password):
     
     return cert_file.name, key_file.name
 
-
 def descompactarZIP(conteudo: str) -> str:
     return gzip.decompress(base64.b64decode(conteudo)).decode("utf8")
 
 def normalizar_cnpj(cnpj: str):
     return cnpj.replace(".", "").replace("-", "").replace("/", "")
+
+def download_danfse(chave: str, output_path: str, cert_path: str, cert_password: str):
+    """
+    Faz o download do PDF baseado na chave de acesso utilizando o EndPoint: https://adn.nfse.gov.br/danfse/{chave}
+    
+    Args:
+        chave (str): chave de acesso da NFSe
+        output_path (str): Diretório para salvar o PDF.
+        cert_path (str): Caminho para o arquivo do certificado digital (.pfx).
+        cert_password (str): Senha do certificado digital.
+        
+    """
+
+    cert = None
+    key = None
+    try:
+        cert, key = extract_pem_and_key_from_pfx(cert_path, cert_password)
+    except Exception as e:
+        return f"Erro ao extrair certificado e chave, verifique o caminho do arquivo e senha."
+
+    url = f"https://adn.nfse.gov.br/danfse/{chave}"
+
+    try:
+        response = requests.get(url, cert=(cert, key))
+        
+        if response.status_code == 200:
+
+            os.makedirs(output_path, exist_ok=True)
+            output_file = f"{output_path}/{chave}.pdf"
+            
+            with open(output_file,"wb") as pdf:
+                pdf.write(response.content)
+
+            return f"Arquivo salvo em : {output_file}"
+        
+        elif response.status_code == 400:
+            return f"Erro na requisição {response.text}"
+        
+        elif response.status_code == 404:
+            return "NSU não encontrado"
+        
+        elif response.status_code == 500:
+            return "Erro interno do servidor"
+        
+        elif response.status_code == 429:
+            return "Muitas requisições, aguarde e tente novamente"
+        
+        else:
+            return f"Erro na requisição {response.status_code}"
+
+    except Exception as e:
+        return f"Falha na requisição: {e}"
 
 def download_nfse(cnpj: str, nsu: int, output_path: str, cert_path: str, cert_password: str):
     """

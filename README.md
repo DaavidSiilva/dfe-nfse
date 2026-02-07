@@ -22,6 +22,7 @@ Documentação Oficial ADN: https://adn.nfse.gov.br/contribuintes/docs/index.htm
 - Conversão automática de certificados (.pfx) para formatos compatíveis com a API (.pem/.key).
 - Download em lote de documentos fiscais a partir de um NSU (Número Sequencial Único).
 - Organização automática dos arquivos XML baixados em diretórios por Ano e Mês (ex: 2024.01).
+- Download de DANFSe através da chave de acesso.
 
 
 ## Instalação
@@ -36,7 +37,7 @@ pip install dfe-nfse
 
 Para utilizar a biblioteca, é necessário possuir um certificado digital modelo A1 válido e sua respectiva senha.
 
-### Exemplo Básico
+### Exemplo Básico de Download XML
 
 ```python
 from nfse import download_nfse
@@ -67,6 +68,37 @@ A função `download_nfse` aceita os seguintes argumentos:
 - **cnpj (str)**: O CNPJ da empresa contribuinte (apenas números ou com formatação padrão). A biblioteca normaliza automaticamente removendo pontuações.
 - **nsu (int)**: Número Sequencial Único a partir do qual a busca será realizada. Utilize este controle para baixar apenas notas novas.
 - **output_path (str)**: Diretório raiz onde os XMLs serão salvos. A estrutura interna será criada automaticamente no formato `Ano.Mes/ChaveAcesso.xml`.
+- **cert_path (str)**: Caminho absoluto ou relativo para o arquivo do certificado digital (.pfx).
+- **cert_password (str)**: Senha para descriptografar o certificado digital.
+
+### Exemplo Básico de Download danfse
+
+```python
+from nfse import download_danfse
+
+# Configurações iniciais
+chave = "00000000000000000000000000000000000000000000000000"
+caminho_saida = "./PDF"
+caminho_certificado = "/caminho/para/seu/certificado.pfx"
+senha_certificado = "sua_senha_segura"
+
+# Executa o download
+resultado = download_danfse(
+    chave=chave,
+    output_path=caminho_saida,
+    cert_path=caminho_certificado,
+    cert_password=senha_certificado
+)
+
+print(f"Status da operação: {resultado}")
+```
+
+### Detalhes dos Parâmetros
+
+A função `download_nfse` aceita os seguintes argumentos:
+
+- **chave (str)**: Chave de acesso do documento.
+- **output_path (str)**: Diretório raiz onde os XMLs serão salvos. O nome do arquivo sempre será a chave de acesso`.
 - **cert_path (str)**: Caminho absoluto ou relativo para o arquivo do certificado digital (.pfx).
 - **cert_password (str)**: Senha para descriptografar o certificado digital.
 
